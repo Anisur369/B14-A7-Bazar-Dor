@@ -1,4 +1,5 @@
 'use client';
+import { FaCaretDown } from 'react-icons/fa';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -148,7 +149,7 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
                   {sortBy === 'low-high' && 'দাম: কম থেকে বেশি'}
                   {sortBy === 'high-low' && 'দাম: বেশি থেকে কম'}
                 </span>
-                <span className="text-[10px]">▲</span>
+                <span className="text-[10px]"><FaCaretDown /></span>
               </button>
             </div>
 

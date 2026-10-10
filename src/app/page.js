@@ -8,8 +8,10 @@ export default function Home() {
     <>
       <HeroSection />
       <TodayUpPrice />
+      <div  id="সব-পণ্য">
       <TodayDownPrice />
       <AllProducts />
+      </div>
     </>
   );
 }

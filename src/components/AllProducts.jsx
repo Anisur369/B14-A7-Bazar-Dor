@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 // ইংরেজি সংখ্যাকে বাংলায় রূপান্তর করার ফাংশন
 const toBengaliNumber = (num) => {
@@ -98,7 +99,8 @@ export default function AllProducts() {
             const pctVal = Math.abs(item.change?.pct || 0);
 
             return (
-              <div
+              <Link
+                href={`/product/${item.slug}`}
                 key={item.id || item.slug}
                 className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
@@ -149,7 +151,7 @@ export default function AllProducts() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

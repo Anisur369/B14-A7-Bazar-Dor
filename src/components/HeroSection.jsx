@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import bazarHero from '@/assets/bazar-hero.png';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -26,12 +27,13 @@ export default function HeroSection() {
 
           {/* অ্যাকশন বাটন */}
           <div className="pt-2">
-            <button
+            <Link
+              href="#সব-পণ্য"
               type="button"
               className="bg-[#008744] hover:bg-[#007139] active:scale-[0.98] text-white font-medium px-6 py-2.5 rounded-lg transition-all text-xs sm:text-sm shadow-md"
             >
               সব পণ্য দেখুন
-            </button>
+            </Link>
           </div>
         </div>
 
