@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 // Lakkoofsa Ingiliffaa gara Afaan Bangaaliitti jijjiiruuf
@@ -94,7 +95,8 @@ export default function TodayDownPrice() {
             const pctVal = Math.abs(item.change?.pct || 0);
 
             return (
-              <div
+              <Link 
+                href={`/product/${item.slug}`}
                 key={item.id || item.slug}
                 className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
@@ -131,7 +133,7 @@ export default function TodayDownPrice() {
                     <span>{toBengaliNumber(pctVal.toFixed(1))}%</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

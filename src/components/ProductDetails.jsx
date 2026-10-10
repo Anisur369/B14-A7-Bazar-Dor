@@ -18,7 +18,7 @@ const toBengaliNumber = (num) => {
     .join('');
 };
 
-// কাস্টম ইউনিট রূপান্তর (kg -> কেজি, liter -> লিটার)
+// ইউনিট রূপান্তর
 const getBengaliUnit = (unit) => {
   if (unit === 'kg') return 'প্রতি কেজি';
   if (unit === 'liter' || unit === 'ltr') return 'প্রতি লিটার';
@@ -27,29 +27,34 @@ const getBengaliUnit = (unit) => {
   return `প্রতি ${unit}`;
 };
 
-export default function ProductDetails({ productId = 'dal' }) { // ডিফল্ট dal রাখলাম আপনার লগ অনুযায়ী
+export default function ProductDetails({ slug }) {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    // পেজ লোড হওয়ার সাথে সাথে স্ক্রিন উপরে নিয়ে যাওয়া
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     const fetchProductDetails = async () => {
       try {
-        // API থেকে ডেটা ফেচ করা
-        const response = await fetch(`https://api.api-store.workers.dev/api/bazardor/products?category=${productId}`);
+        const response = await fetch('https://openapi.programming-hero.com/api/bazardor/products');
         if (!response.ok) {
           throw new Error('ডেটা ফেচ করতে সমস্যা হয়েছে');
         }
         const data = await response.json();
+        
+        // API থেকে আসা ডেটা অ্যারে বা অবজেক্ট হতে পারে, তা হ্যান্ডেল করা
+        const productList = Array.isArray(data) ? data : data.products || data.data || [];
 
-        // প্রধান পরিবর্তন এখানে: API অ্যারে রিটার্ন করছে।
-        // আমরা অ্যারের প্রথম পণ্যটি (data[0]) ব্যবহার করব।
-        if (data && data.length > 0) {
-          setProduct(data[0]); // শুধু প্রথম পণ্যটি সেট করছি
+        // প্রপস হিসেবে আসা slug এর সাথে মিলে যাওয়া পণ্যটি খুঁজে বের করা
+        const matchedProduct = productList.find((item) => item.slug === slug);
+
+        if (matchedProduct) {
+          setProduct(matchedProduct);
         } else {
-          setProduct(null); // ক্যাটাগরিতে কোনো পণ্য না থাকলে
+          setError('কাঙ্ক্ষিত পণ্যটি পাওয়া যায়নি।');
         }
-
       } catch (err) {
         console.error('Error fetching product details:', err);
         setError('পণ্যের তথ্য লোড করা সম্ভব হয়নি।');
@@ -58,10 +63,11 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
       }
     };
 
-    fetchProductDetails();
-  }, [productId]);
+    if (slug) {
+      fetchProductDetails();
+    }
+  }, [slug]);
 
-  // লোডিং স্টেট
   if (loading) {
     return (
       <div className="bg-[#eff3f0] min-h-screen py-10 px-4 flex items-center justify-center font-sans">
@@ -76,18 +82,17 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
     );
   }
 
-  // এরর বা পণ্য না পাওয়ার স্টেট
   if (error || !product) {
     return (
       <div className="bg-[#eff3f0] min-h-screen py-10 px-4 font-sans">
         <div className="max-w-4xl mx-auto p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-center text-sm font-medium">
-          {error || 'এই ক্যাটাগরিতে কোনো পণ্য পাওয়া যায়নি।'}
+          {error || 'পণ্য পাওয়া যায়নি।'}
         </div>
       </div>
     );
   }
 
-  // ডেটা প্রসেসিং
+  // বাজারের সর্বনিম্ন, সর্বাধিক এবং গড় দাম হিসাব করা
   const markets = product.markets || [];
   const minPrices = markets.map((m) => m.min).filter(Boolean);
   const maxPrices = markets.map((m) => m.max).filter(Boolean);
@@ -108,21 +113,22 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
     <div className="bg-[#eff3f0] min-h-screen py-6 px-4 sm:px-6 md:px-12 font-sans text-gray-800">
       <div className="max-w-5xl mx-auto space-y-5">
         
-        {/* 1. ব্র্যাডক্রাম্ব নেভিগেশন */}
+        {/* ১. ব্র্যাডক্রাম্ব নেভিগেশন */}
         <nav className="text-xs text-gray-500 flex items-center gap-1.5">
           <Link href="/" className="hover:text-gray-700">হোম</Link>
           <span>›</span>
-          <span className="hover:text-gray-700">{product.categoryNameBn || 'ডাল'}</span>
+          <Link href={`/category/${product.category}`} className="hover:text-gray-700">
+            {product.categoryNameBn || 'চাল'}
+          </Link>
           <span>›</span>
           <span className="text-gray-800 font-medium">{product.nameBn}</span>
         </nav>
 
-        {/* 2. পণ্যের হেডার কার্ড */}
+        {/* ২. মূল পণ্যের হেডার কার্ড */}
         <div className="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            {/* আইকন / ইমেজ */}
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-3xl shrink-0">
-              {product.image || product.categoryIcon || '🫘'}
+              {product.image || product.categoryIcon || '🍚'}
             </div>
 
             <div>
@@ -130,10 +136,9 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
                 {product.nameBn}
               </h1>
               <p className="text-xs text-gray-500 mt-1">
-                {getBengaliUnit(product.unit)} · {product.categoryNameBn || 'ডাল'}
+                {getBengaliUnit(product.unit)} · {product.categoryNameBn || 'চাল'}
               </p>
               
-              {/* গতকালের সাথে তুলনা */}
               <p className="text-xs text-gray-500 mt-2">
                 গতকালকের তুলনায় আজ দাম{' '}
                 <span className={isUp ? 'text-red-600 font-semibold' : isDown ? 'text-emerald-600 font-semibold' : 'font-semibold'}>
@@ -145,7 +150,7 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
           </div>
 
           {/* আজকের দামের বক্স */}
-          <div className="bg-gray-50 rounded-xl p-3 sm:p-4 border border-gray-100 text-center min-w-[120px] sm:min-w-[140px] self-stretch sm:self-auto flex flex-col justify-center shadow-inner">
+          <div className="bg-gray-50 rounded-xl p-3 sm:p-4 border border-gray-100 text-center min-w-[120px] sm:min-w-[140px] self-stretch sm:self-auto flex flex-col justify-center">
             <span className="text-[11px] text-gray-500 block">আজকের দাম</span>
             <div className="text-xl sm:text-2xl font-bold text-gray-900 my-0.5">
               {toBengaliNumber(product.today)}
@@ -160,16 +165,16 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
           </div>
         </div>
 
-        {/* 3. দামের সারসংক্ষেপ কার্ড */}
+        {/* ৩. দামের সারসংক্ষেপ ও বাজারভিত্তিক টেবিল */}
         <div className="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-sm space-y-6">
           
+          {/* সারসংক্ষেপ কার্ড */}
           <div>
-            <h2 className="text-sm font-bold text-gray-900 mb-3 border-l-4 border-emerald-500 pl-2">
+            <h2 className="text-sm font-bold text-gray-900 mb-3">
               দামের সারসংক্ষেপ
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {/* সর্বনিম্ন দাম */}
-              <div className="bg-gray-50/70 rounded-xl p-4 border border-gray-100 shadow-inner">
+              <div className="bg-gray-50/70 rounded-xl p-4 border border-gray-100">
                 <span className="text-xs text-gray-500 block">সর্বনিম্ন দাম</span>
                 <div className="text-lg font-bold text-emerald-600 my-1">
                   {toBengaliNumber(minPriceOverall)} টাকা
@@ -177,8 +182,7 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
                 <span className="text-[11px] text-gray-400 block">সবচেয়ে কম দামের বাজার</span>
               </div>
 
-              {/* সর্বাধিক দাম */}
-              <div className="bg-gray-50/70 rounded-xl p-4 border border-gray-100 shadow-inner">
+              <div className="bg-gray-50/70 rounded-xl p-4 border border-gray-100">
                 <span className="text-xs text-gray-500 block">সর্বাধিক দাম</span>
                 <div className="text-lg font-bold text-red-600 my-1">
                   {toBengaliNumber(maxPriceOverall)} টাকা
@@ -186,8 +190,7 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
                 <span className="text-[11px] text-gray-400 block">সবচেয়ে বেশি দামের বাজার</span>
               </div>
 
-              {/* গড় দাম */}
-              <div className="bg-gray-50/70 rounded-xl p-4 border border-gray-100 shadow-inner">
+              <div className="bg-gray-50/70 rounded-xl p-4 border border-gray-100">
                 <span className="text-xs text-gray-500 block">গড় দাম</span>
                 <div className="text-lg font-bold text-emerald-600 my-1">
                   {toBengaliNumber(avgPriceOverall)} টাকা
@@ -199,16 +202,16 @@ export default function ProductDetails({ productId = 'dal' }) { // ডিফল�
             </div>
           </div>
 
-          {/* 4. বাজারভিত্তিক দামের টেবিল */}
+          {/* বাজারভিত্তিক টেবিল */}
           <div>
-            <h2 className="text-sm font-bold text-gray-900 mb-3 border-l-4 border-emerald-500 pl-2">
+            <h2 className="text-sm font-bold text-gray-900 mb-3">
               বাজারভিত্তিক আজকের দাম
             </h2>
 
-            <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-inner">
+            <div className="overflow-x-auto rounded-xl border border-gray-100">
               <table className="w-full text-left border-collapse text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-gray-50 text-gray-500 border-b border-gray-100">
+                  <tr className="bg-gray-50/80 text-gray-500 border-b border-gray-100">
                     <th className="py-3 px-4 font-semibold">বাজার</th>
                     <th className="py-3 px-4 font-semibold">বিভাগ</th>
                     <th className="py-3 px-4 font-semibold text-center">সর্বনিম্ন</th>

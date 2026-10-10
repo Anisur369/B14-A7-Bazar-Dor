@@ -4,7 +4,7 @@ const Peyaj = async ({ params }) => {
   const { id } = await params;
   return (
     <>
-        <ProductDetails productId={id} />
+        <ProductDetails slug={id} />
     </>
   );
 };
