@@ -20,7 +20,6 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-[#eff2ee] px-4 py-12 md:px-8">
       <div className="mx-auto max-w-4xl">
-        {/* Header Section */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">
             আমার প্রোফাইল
@@ -30,7 +29,6 @@ export default function ProfilePage() {
           </p>
         </div>
 
-        {/* User Card */}
         <div className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">
             <div className="relative h-20 w-20 overflow-hidden rounded-2xl bg-slate-200">
@@ -76,7 +74,6 @@ export default function ProfilePage() {
           </button>
         </div>
 
-        {/* Information Form Card */}
         <div className="rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-sm md:p-8">
           <h3 className="mb-6 text-lg font-bold text-slate-900">তথ্য</h3>
 

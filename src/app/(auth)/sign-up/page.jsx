@@ -94,7 +94,7 @@ export default function SignUpPage() {
   const handleGoogleSignIn = async () => {
     const resData = await signIn.social({
       provider: "google",
-      callbackURL: "/", // সফলভাবে লগইন শেষে যেখানে রিডাইরেক্ট হবে
+      callbackURL: "/", 
     });
     console.log('after google sign in:', resData);
   };
@@ -102,14 +102,13 @@ export default function SignUpPage() {
   const handleGithubSignIn = async () => {
     const resData = await signIn.social({
       provider: "github",
-      callbackURL: "/", // সফলভাবে লগইন শেষে যেখানে রিডাইরেক্ট হবে
+      callbackURL: "/", 
     });
     console.log('after github sign in:', resData);
   };
 
   return (
     <div className="min-h-screen bg-[#eff3f0] flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 font-sans text-gray-800">
-      {/* হেডার সেকশন */}
       <div className="text-center mb-6 max-w-sm sm:max-w-md w-full">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
           অ্যাকাউন্ট তৈরি করুন
@@ -128,7 +127,6 @@ export default function SignUpPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* নাম */}
           <div>
             <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
               নাম
@@ -141,8 +139,6 @@ export default function SignUpPage() {
               required
             />
           </div>
-
-          {/* ইমেইল */}
           <div>
             <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
               ইমেইল

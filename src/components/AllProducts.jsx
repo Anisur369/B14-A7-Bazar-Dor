@@ -81,7 +81,6 @@ export default function AllProducts() {
     <section className="bg-[#eff3f0] py-8 px-4 sm:px-6 md:px-12 font-sans text-gray-800">
       <div className="max-w-6xl mx-auto">
         
-        {/* হেডার সেকশন */}
         <div className="mb-6">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
             সব পণ্য
@@ -91,7 +90,6 @@ export default function AllProducts() {
           </p>
         </div>
 
-        {/* প্রোডাক্ট গ্রিড */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {products.map((item) => {
             const isUp = item.change?.dir === 'up';
@@ -104,14 +102,11 @@ export default function AllProducts() {
                 key={item.id || item.slug}
                 className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
-                {/* কার্ডের উপরের অংশ: আইকন, নাম ও একক */}
                 <div className="flex items-start gap-3">
-                  {/* আইকন / ইমেজ কন্টেইনার */}
                   <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-xl shrink-0">
                     {item.image || item.categoryIcon || '📦'}
                   </div>
 
-                  {/* নাম এবং ইউনিট */}
                   <div className="min-w-0 flex-1">
                     <h3 className="text-sm sm:text-base font-bold text-gray-900 truncate">
                       {item.nameBn}
@@ -122,7 +117,6 @@ export default function AllProducts() {
                   </div>
                 </div>
 
-                {/* কার্ডের নিচের অংশ: দাম এবং পরিবর্তনের পার্সেন্টেজ */}
                 <div className="mt-5 flex items-end justify-between">
                   <div>
                     <span className="block text-[11px] text-gray-500 mb-0.5">
@@ -133,7 +127,6 @@ export default function AllProducts() {
                     </div>
                   </div>
 
-                  {/* পরিবর্তনের ব্যাজ (Up / Down / Neutral) */}
                   <div
                     className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold ${
                       isUp

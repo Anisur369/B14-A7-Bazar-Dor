@@ -95,10 +95,8 @@ export default function Header() {
 
       <Toaster position="top-center" reverseOrder={false} />
       
-      {/* ১. মূল নেভবার (Main Navbar) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
         
-        {/* ব্র্যান্ডিং ও লোগো */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#008744] rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105 shrink-0 overflow-hidden">
             <Image 
@@ -119,7 +117,6 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* ডান দিকের অংশ: সাইন ইন / সাইন আপ বা প্রোফাইল */}
         <div className="flex items-center gap-2 sm:gap-3">
           {!session && !isPending ? (
             <div className="flex items-center gap-2 sm:gap-4">
@@ -155,7 +152,6 @@ export default function Header() {
                 <FaCaretDown className={`text-xs text-gray-500 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* ড্রপডাউন মেনু */}
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-56 sm:w-64 bg-[#f8faf7] rounded-2xl shadow-xl border border-gray-200/70 p-3 sm:p-4 z-50">
                   <div className="mb-3 pb-1 border-b border-gray-100">
@@ -193,7 +189,6 @@ export default function Header() {
 
       </div>
 
-      {/* ২. ক্যাটাগরি নেভ-লিংকস */}
       <div className="border-t border-gray-200/50 bg-[#f8faf7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto no-scrollbar scroll-smooth">
           {loading ? (

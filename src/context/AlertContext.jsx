@@ -21,7 +21,6 @@ export function AlertProvider({ children }) {
     <AlertContext.Provider value={{ showAlert }}>
       {children}
 
-      {/* গ্লোবাল অ্যালার্ট পপআপ ডিজাইন */}
       {alert.show && (
         <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-[9999] animate-bounce">
           <div className="bg-white px-5 py-3 rounded-2xl shadow-2xl border border-gray-100 flex items-center gap-3">

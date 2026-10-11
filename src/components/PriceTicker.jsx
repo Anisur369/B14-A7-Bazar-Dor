@@ -59,7 +59,6 @@ export default function PriceTicker() {
   return (
     <div className="w-full bg-[#f8faf7] border-b border-gray-200/60 py-2.5 overflow-hidden font-sans relative">
       <div className="flex overflow-x-hidden whitespace-nowrap">
-        {/* Jalqabaa (First Marquee track) */}
         <div className="animate-marquee items-center gap-1 shrink-0 flex">
           {products.map((item, idx) => {
             const isUp = item.change?.dir === 'up';
@@ -83,7 +82,6 @@ export default function PriceTicker() {
           })}
         </div>
 
-        {/* Lammaffaa (Duplicate track for infinite scroll effect) */}
         <div className="animate-marquee items-center gap-8 shrink-0 flex" aria-hidden="true">
           {products.map((item, idx) => {
             const isUp = item.change?.dir === 'up';

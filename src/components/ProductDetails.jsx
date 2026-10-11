@@ -113,7 +113,6 @@ export default function ProductDetails({ slug }) {
     <div className="bg-[#eff3f0] min-h-screen py-6 px-4 sm:px-6 md:px-12 font-sans text-gray-800">
       <div className="max-w-5xl mx-auto space-y-5">
         
-        {/* ১. ব্র্যাডক্রাম্ব নেভিগেশন */}
         <nav className="text-xs text-gray-500 flex items-center gap-1.5">
           <Link href="/" className="hover:text-gray-700">হোম</Link>
           <span>›</span>
@@ -124,7 +123,6 @@ export default function ProductDetails({ slug }) {
           <span className="text-gray-800 font-medium">{product.nameBn}</span>
         </nav>
 
-        {/* ২. মূল পণ্যের হেডার কার্ড */}
         <div className="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-3xl shrink-0">
@@ -149,7 +147,6 @@ export default function ProductDetails({ slug }) {
             </div>
           </div>
 
-          {/* আজকের দামের বক্স */}
           <div className="bg-gray-50 rounded-xl p-3 sm:p-4 border border-gray-100 text-center min-w-[120px] sm:min-w-[140px] self-stretch sm:self-auto flex flex-col justify-center">
             <span className="text-[11px] text-gray-500 block">আজকের দাম</span>
             <div className="text-xl sm:text-2xl font-bold text-gray-900 my-0.5">
@@ -165,10 +162,8 @@ export default function ProductDetails({ slug }) {
           </div>
         </div>
 
-        {/* ৩. দামের সারসংক্ষেপ ও বাজারভিত্তিক টেবিল */}
         <div className="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-sm space-y-6">
           
-          {/* সারসংক্ষেপ কার্ড */}
           <div>
             <h2 className="text-sm font-bold text-gray-900 mb-3">
               দামের সারসংক্ষেপ
@@ -202,7 +197,6 @@ export default function ProductDetails({ slug }) {
             </div>
           </div>
 
-          {/* বাজারভিত্তিক টেবিল */}
           <div>
             <h2 className="text-sm font-bold text-gray-900 mb-3">
               বাজারভিত্তিক আজকের দাম

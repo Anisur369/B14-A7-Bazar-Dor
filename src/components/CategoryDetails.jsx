@@ -114,7 +114,6 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
     <div className="bg-[#eff3f0] min-h-screen py-6 px-4 sm:px-6 md:px-12 font-sans text-gray-800">
       <div className="max-w-6xl mx-auto space-y-6">
         
-        {/* ১. ক্যাটাগরি হেডার ব্যানার কার্ড */}
         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex items-center gap-4">
           <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-3xl shrink-0">
             {categoryIcon}
@@ -129,13 +128,11 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
           </div>
         </div>
 
-        {/* ২. সাব-হেডার এবং সর্টিং ড্রপডাউন */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-xs sm:text-sm text-gray-600">
             মোট {toBengaliNumber(products.length)}টি পণ্য দেখানো হচ্ছে
           </p>
 
-          {/* সর্টিং সেকশন */}
           <div className="relative">
             <div className="flex items-center gap-2 text-xs sm:text-sm">
               <span className="text-gray-600 font-medium">সাজান</span>
@@ -153,7 +150,6 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
               </button>
             </div>
 
-            {/* ড্রপডাউন মেনু */}
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-10 text-xs sm:text-sm">
                 <button
@@ -185,7 +181,6 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
           </div>
         </div>
 
-        {/* ৩. প্রোডাক্ট গ্রিড */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {sortedProducts.map((item) => {
             const isUp = item.change?.dir === 'up';
@@ -198,7 +193,6 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
                 key={item.id || item.slug}
                 className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
-                {/* কার্ডের উপরের অংশ */}
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-xl shrink-0">
                     {item.image || item.categoryIcon || '🍚'}
@@ -214,7 +208,6 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
                   </div>
                 </div>
 
-                {/* কার্ডের নিচের অংশ */}
                 <div className="mt-5 flex items-end justify-between">
                   <div>
                     <span className="block text-[11px] text-gray-500 mb-0.5">
@@ -225,7 +218,6 @@ export default function CategoryDetails({ categorySlug = 'chal' }) {
                     </div>
                   </div>
 
-                  {/* পরিবর্তনের ব্যাজ */}
                   <div
                     className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold ${
                       isUp

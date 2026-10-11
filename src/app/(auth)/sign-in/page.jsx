@@ -96,7 +96,6 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen bg-[#eff3f0] flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 font-sans text-gray-800">
-      {/* হেডার সেকশন */}
       <div className="text-center mb-6 max-w-sm sm:max-w-md w-full">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
           সাইন ইন
@@ -106,10 +105,9 @@ export default function SignInPage() {
         </p>
       </div>
 
-      {/* কার্ড কন্টেইনার */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-8 w-full max-w-sm sm:max-w-md">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* ইমেইল */}
+          
           <div>
             <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
               ইমেইল
@@ -123,7 +121,6 @@ export default function SignInPage() {
             />
           </div>
 
-          {/* পাসওয়ার্ড */}
           <div>
             <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
               পাসওয়ার্ড
@@ -138,14 +135,12 @@ export default function SignInPage() {
             />
           </div>
 
-          {/* এরর মেসেজ অ্যালার্ট (যদি থাকে) */}
           {errorMsg && (
             <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-xs text-center font-medium">
               {errorMsg}
             </div>
           )}
 
-          {/* সাইন ইন বাটন (লোডিং স্টেট সহ) */}
           <button
             type="submit"
             disabled={loading}
@@ -165,13 +160,11 @@ export default function SignInPage() {
           </button>
         </form>
 
-        {/* অথবা ডিভাইডার */}
         <div className="relative my-5 sm:my-6 flex items-center justify-center">
           <div className="border-t border-gray-200 w-full"></div>
           <span className="bg-white px-3 text-xs text-gray-500 absolute">অথবা</span>
         </div>
 
-        {/* সোশ্যাল লগইন বাটন */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           <button
             type="button"
@@ -192,7 +185,6 @@ export default function SignInPage() {
           </button>
         </div>
 
-        {/* সাইন আপ লিংক */}
         <div className="text-center mt-6 text-xs text-gray-600">
           অ্যাকাউন্ট নেই?{' '}
           <Link href="/signup" className="text-emerald-600 font-semibold hover:underline">
@@ -201,7 +193,6 @@ export default function SignInPage() {
         </div>
       </div>
 
-      {/* হোম পেজ লিংক */}
       <div className="mt-5 sm:mt-6">
         <Link
           href="/"

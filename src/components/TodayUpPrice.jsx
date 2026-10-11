@@ -81,7 +81,6 @@ export default function TodayUpPrice() {
     <section className="bg-[#eff3f0] py-6 px-4 sm:px-6 md:px-12 font-sans text-gray-800">
       <div className="max-w-6xl mx-auto">
         
-        {/* Mata Duree Section */}
         <div className="flex items-center gap-2 mb-4">
           <span className="text-red-600 text-sm sm:text-base">▲</span>
           <h2 className="text-lg sm:text-xl font-bold text-gray-900">
@@ -89,7 +88,6 @@ export default function TodayUpPrice() {
           </h2>
         </div>
 
-        {/* Oomishaalee Gatiin Dabalame Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {upProducts.map((item) => {
             const pctVal = Math.abs(item.change?.pct || 0);
@@ -100,7 +98,6 @@ export default function TodayUpPrice() {
                 key={item.id || item.slug}
                 className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
-                {/* Boqonnaa Ol'aanaa: Mallattoo, Maqaa fi Unit */}
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-xl shrink-0">
                     {item.image || item.categoryIcon || '📦'}
@@ -116,7 +113,6 @@ export default function TodayUpPrice() {
                   </div>
                 </div>
 
-                {/* Boqonnaa Jalaa: Gatii Har'aa fi Dabalata Dhibbeentaa */}
                 <div className="mt-5 flex items-end justify-between">
                   <div>
                     <span className="block text-[11px] text-gray-500 mb-0.5">
@@ -127,7 +123,6 @@ export default function TodayUpPrice() {
                     </div>
                   </div>
 
-                  {/* Red Badge Dabalata Gatiif */}
                   <div className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold bg-red-50 text-red-600">
                     <span>▲</span>
                     <span>{toBengaliNumber(pctVal.toFixed(1))}%</span>
