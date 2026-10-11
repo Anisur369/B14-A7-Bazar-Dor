@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { FiShoppingCart } from 'react-icons/fi';
 import { FaUser, FaSignOutAlt, FaCaretDown } from 'react-icons/fa';
 import React, { useState, useRef, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -60,8 +61,41 @@ export default function Header() {
     fetchCategories();
   }, []);
 
+
+
+const handleSignOut = async () => {
+  try {
+    await signOut();
+    setIsDropdownOpen(false);
+
+    // 🟢 রিয়্যাক্ট টোস্ট অ্যালার্ট দেখানো
+    toast.success('সফলভাবে সাইন আউট হয়েছে।', {
+      duration: 3000, // ৩ সেকেন্ড পর চলে যাবে
+      style: {
+        border: '1px solid #f0f0f0',
+        padding: '12px 20px',
+        color: '#1f2937',
+        borderRadius: '16px',
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+        fontWeight: '500',
+        fontSize: '14px',
+      },
+      iconTheme: {
+        primary: '#22c55e', // সবুজ টিক মার্ক
+        secondary: '#fff',
+      },
+    });
+
+  } catch (err) {
+    console.error('Sign out error:', err);
+    toast.error('সাইন আউট করতে সমস্যা হয়েছে!');
+  }
+};
+
   return (
     <header className="w-full bg-[#f8faf7] border-b border-gray-200/70 sticky top-0 z-50 font-sans">
+
+      <Toaster position="top-center" reverseOrder={false} />
       
       {/* ১. মূল নেভবার (Main Navbar) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
@@ -98,7 +132,8 @@ export default function Header() {
                 সাইন আপ
               </Link>
             </div>
-          ) : (
+          ) : !session && isPending ?
+          <span className="text-gray-500">Loading...</span>:(
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -138,10 +173,7 @@ export default function Header() {
                     </Link>
 
                     <button
-                      onClick={() => {
-                        signOut();
-                        setIsDropdownOpen(false);
-                      }}
+                      onClick={handleSignOut}
                       className="w-full flex items-center gap-3 px-3 py-2 text-xs sm:text-sm font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-colors text-left cursor-pointer"
                     >
                       <FaSignOutAlt className="text-red-500 text-sm rotate-180" />
@@ -156,7 +188,7 @@ export default function Header() {
 
       </div>
 
-      {/* ২. ক্যাটাগরি নেভ-লিংকস (মেইন কন্টেইনারের সাথে মার্জিন ও প্যাডিং নিখুঁতভাবে সমান করা হয়েছে) */}
+      {/* ২. ক্যাটাগরি নেভ-লিংকস (মেইন কন্টেইনারের সাথে মার্জিন ও প্যাডিং নিখুঁতভাবে সমান করা হয়েছে) */}
       <div className="border-t border-gray-200/50 bg-[#f8faf7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto no-scrollbar scroll-smooth">
           {loading ? (
