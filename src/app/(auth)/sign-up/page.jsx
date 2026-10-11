@@ -1,14 +1,17 @@
 'use client';
 
-import Link from 'next/link';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { signUp, signIn } from '@/lib/auth-client';
+import toast from "react-hot-toast";
+import { useRouter } from 'next/navigation'; // 🟢 সঠিক নেভিগেশন হুক (App Router-এর জন্য)
 
 export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const router = useRouter(); // 🟢 রাউটার ইনিশিয়ালাইজ করা হয়েছে
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,13 +19,13 @@ export default function SignUpPage() {
     const formData = new FormData(e.currentTarget);
     const userData = Object.fromEntries(formData.entries());
 
-    // ১. পাসওয়ার্ডের দৈর্ঘ্য চেক
+    // ১. পাসওয়ার্ডের দৈর্ঘ্য চেক
     if (userData.password.length < 8) {
       setErrorMsg('পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।');
       return;
     }
 
-    // ২. অন্তত একটি বড় হাতের অক্ষর (A-Z) চেক
+    // ২. অন্তত একটি বড় হাতের অক্ষর (A-Z) চেক
     if (!/[A-Z]/.test(userData.password)) {
       setErrorMsg('পাসওয়ার্ডে অন্তত একটি বড় হাতের অক্ষর (A-Z) থাকতে হবে।');
       return;
@@ -34,7 +37,7 @@ export default function SignUpPage() {
       return;
     }
 
-    // ৪. পাসওয়ার্ড ম্যাচিং চেক
+    // ৪. পাসওয়ার্ড ম্যাচিং চেক
     if (userData.password !== userData.confirmPassword) {
       setErrorMsg('পাসওয়ার্ড দুটি মিলছে না!');
       return;
@@ -47,10 +50,39 @@ export default function SignUpPage() {
         email: userData.email,
         password: userData.password,
       });
+
       console.log('Sign Up Response:', { data, error });
+
+      // যদি কোনো এরর থাকে তবে তা দেখাবে এবং প্রসেস থামিয়ে দেবে
       if (error) {
         setErrorMsg(error.message || 'সাইন আপ করতে সমস্যা হয়েছে।');
+        setLoading(false);
+        return;
       }
+
+      // সফলভাবে সাইন আপ হলে টোস্ট মেসেজ দেখাবে এবং হোম পেজে রিডাইরেক্ট করবে
+      if (data) {
+        toast.success('সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে।', {
+          duration: 3000,
+          style: {
+            border: '1px solid #f0f0f0',
+            padding: '12px 20px',
+            color: '#1f2937',
+            borderRadius: '16px',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            fontWeight: '500',
+            fontSize: '14px',
+          },
+          iconTheme: {
+            primary: '#22c55e',
+            secondary: '#fff',
+          },
+        });
+
+        // 🟢 হোম পেজে রিডাইরেক্ট করা হচ্ছে
+        router.push('/');
+      }
+
     } catch (err) {
       console.error('Submission Error:', err);
       setErrorMsg('একটি ত্রুটি ঘটেছে। আবার চেষ্টা করুন।');
@@ -62,6 +94,7 @@ export default function SignUpPage() {
   const handleGoogleSignIn = async () => {
     const resData = await signIn.social({
       provider: "google",
+      callbackURL: "/", // সফলভাবে লগইন শেষে যেখানে রিডাইরেক্ট হবে
     });
     console.log('after google sign in:', resData);
   };
@@ -69,6 +102,7 @@ export default function SignUpPage() {
   const handleGithubSignIn = async () => {
     const resData = await signIn.social({
       provider: "github",
+      callbackURL: "/", // সফলভাবে লগইন শেষে যেখানে রিডাইরেক্ট হবে
     });
     console.log('after github sign in:', resData);
   };
@@ -202,7 +236,7 @@ export default function SignUpPage() {
         {/* সাইন ইন লিংক */}
         <div className="text-center mt-6 text-xs text-gray-600">
           অ্যাকাউন্ট আছে?{' '}
-          <Link href="/login" className="text-emerald-600 font-semibold hover:underline">
+          <Link href="/sign-in" className="text-emerald-600 font-semibold hover:underline">
             সাইন ইন করুন
           </Link>
         </div>
