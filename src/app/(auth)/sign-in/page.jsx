@@ -5,11 +5,14 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { signIn } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation'; 
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
+  const router = useRouter();
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
@@ -40,18 +43,45 @@ export default function SignInPage() {
       
       if (error) {
         setErrorMsg(error.message || 'সাইন ইন করতে সমস্যা হয়েছে।');
+        setLoading(false);
+        return;
       }
+
+      // 🟢 সাইন ইন সফল হলে টোস্ট অ্যালার্ট এবং হোম পেজে রিডাইরেক্ট
+      if (data) {
+        toast.success('সফলভাবে সাইন ইন হয়েছে।', {
+          duration: 3000,
+          style: {
+            border: '1px solid #f0f0f0',
+            padding: '12px 20px',
+            color: '#1f2937',
+            borderRadius: '16px',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            fontWeight: '500',
+            fontSize: '14px',
+          },
+          iconTheme: {
+            primary: '#22c55e',
+            secondary: '#fff',
+          },
+        });
+
+        router.push('/');
+        router.refresh();
+      }
+
     } catch (err) {
       console.error('Submission Error:', err);
       setErrorMsg('একটি ত্রুটি ঘটেছে। আবার চেষ্টা করুন।');
     } finally {
       setLoading(false);
-    }     
+    }    
   };
 
   const handleGoogleSignIn = async () => {
     const resData = await signIn.social({
       provider: "google",
+      callbackURL: "/", // গুগল সাইন ইন সফল হলে সরাসরি হোমে যাবে
     });
     console.log('after google sign in:', resData);
   };
@@ -59,6 +89,7 @@ export default function SignInPage() {
   const handleGithubSignIn = async () => {
     const resData = await signIn.social({
       provider: "github",
+      callbackURL: "/", // গিটহাব সাইন ইন সফল হলে সরাসরি হোমে যাবে
     });
     console.log('after github sign in:', resData);
   };

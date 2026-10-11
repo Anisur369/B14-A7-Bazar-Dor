@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Logo from "@/assets/logo-icon.png";
 import { useSession, signOut } from '@/lib/auth-client';
 import { usePathname } from 'next/navigation';
-import { FiShoppingCart } from 'react-icons/fi';
 import { FaUser, FaSignOutAlt, FaCaretDown } from 'react-icons/fa';
 import React, { useState, useRef, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -61,36 +61,34 @@ export default function Header() {
     fetchCategories();
   }, []);
 
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setIsDropdownOpen(false);
 
+      // রিয়্যাক্ট টোস্ট অ্যালার্ট দেখানো
+      toast.success('সফলভাবে সাইন আউট হয়েছে।', {
+        duration: 3000,
+        style: {
+          border: '1px solid #f0f0f0',
+          padding: '12px 20px',
+          color: '#1f2937',
+          borderRadius: '16px',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+          fontWeight: '500',
+          fontSize: '14px',
+        },
+        iconTheme: {
+          primary: '#22c55e',
+          secondary: '#fff',
+        },
+      });
 
-const handleSignOut = async () => {
-  try {
-    await signOut();
-    setIsDropdownOpen(false);
-
-    // 🟢 রিয়্যাক্ট টোস্ট অ্যালার্ট দেখানো
-    toast.success('সফলভাবে সাইন আউট হয়েছে।', {
-      duration: 3000, // ৩ সেকেন্ড পর চলে যাবে
-      style: {
-        border: '1px solid #f0f0f0',
-        padding: '12px 20px',
-        color: '#1f2937',
-        borderRadius: '16px',
-        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-        fontWeight: '500',
-        fontSize: '14px',
-      },
-      iconTheme: {
-        primary: '#22c55e', // সবুজ টিক মার্ক
-        secondary: '#fff',
-      },
-    });
-
-  } catch (err) {
-    console.error('Sign out error:', err);
-    toast.error('সাইন আউট করতে সমস্যা হয়েছে!');
-  }
-};
+    } catch (err) {
+      console.error('Sign out error:', err);
+      toast.error('সাইন আউট করতে সমস্যা হয়েছে!');
+    }
+  };
 
   return (
     <header className="w-full bg-[#f8faf7] border-b border-gray-200/70 sticky top-0 z-50 font-sans">
@@ -102,8 +100,14 @@ const handleSignOut = async () => {
         
         {/* ব্র্যান্ডিং ও লোগো */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#008744] rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105 shrink-0">
-            <FiShoppingCart className="text-xl sm:text-2xl" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#008744] rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105 shrink-0 overflow-hidden">
+            <Image 
+              src={Logo} 
+              alt="Logo" 
+              width={30} 
+              height={30} 
+              className="w-50% h-50% object-cover" 
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-lg sm:text-2xl font-bold text-gray-900 leading-tight">
@@ -132,8 +136,9 @@ const handleSignOut = async () => {
                 সাইন আপ
               </Link>
             </div>
-          ) : !session && isPending ?
-          <span className="text-gray-500">Loading...</span>:(
+          ) : isPending ? (
+            <span className="text-gray-500 text-xs sm:text-sm">Loading...</span>
+          ) : (
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -188,7 +193,7 @@ const handleSignOut = async () => {
 
       </div>
 
-      {/* ২. ক্যাটাগরি নেভ-লিংকস (মেইন কন্টেইনারের সাথে মার্জিন ও প্যাডিং নিখুঁতভাবে সমান করা হয়েছে) */}
+      {/* ২. ক্যাটাগরি নেভ-লিংকস */}
       <div className="border-t border-gray-200/50 bg-[#f8faf7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto no-scrollbar scroll-smooth">
           {loading ? (

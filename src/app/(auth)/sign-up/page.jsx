@@ -6,12 +6,12 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { signUp, signIn } from '@/lib/auth-client';
 import toast from "react-hot-toast";
-import { useRouter } from 'next/navigation'; // 🟢 সঠিক নেভিগেশন হুক (App Router-এর জন্য)
+import { useRouter } from 'next/navigation'; 
 
 export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const router = useRouter(); // 🟢 রাউটার ইনিশিয়ালাইজ করা হয়েছে
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
