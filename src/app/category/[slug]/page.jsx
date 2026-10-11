@@ -1,10 +1,10 @@
 import CategoryDetails from "@/components/CategoryDetails";
 
 const CategoryDetailsPage = async ({ params }) => {
-  const { id } = await params;
+  const { slug } = await params;
   return (
     <>
-        <CategoryDetails categorySlug={id} />
+        <CategoryDetails categorySlug={slug} />
     </>
   );
 };

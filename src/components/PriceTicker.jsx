@@ -59,14 +59,16 @@ export default function PriceTicker() {
   return (
     <div className="w-full bg-[#f8faf7] border-b border-gray-200/60 py-2.5 overflow-hidden font-sans relative">
       <div className="flex overflow-x-hidden whitespace-nowrap">
-        <div className="animate-marquee items-center gap-1 shrink-0 flex">
+        
+        {/* প্রথম ট্র্যাক */}
+        <div className="animate-marquee items-center shrink-0 flex">
           {products.map((item, idx) => {
             const isUp = item.change?.dir === 'up';
             const isDown = item.change?.dir === 'down';
             const pctVal = Math.abs(item.change?.pct || 0);
 
             return (
-              <div key={idx} className="flex items-center gap-1 text-xs sm:text-sm shrink-0 px-1">
+              <div key={idx} className="flex items-center gap-2 text-xs sm:text-sm shrink-0 px-6">
                 <span className="text-base">{item.image || item.categoryIcon || '🍚'}</span>
                 <span className="font-bold text-gray-900">{item.nameBn}</span>
                 <span className="text-gray-700 font-medium">
@@ -82,14 +84,15 @@ export default function PriceTicker() {
           })}
         </div>
 
-        <div className="animate-marquee items-center gap-8 shrink-0 flex" aria-hidden="true">
+        {/* দ্বিতীয় ট্র্যাক (ইনফিনিট লুপ ঠিক রাখার জন্য ডুপ্লিকেট) */}
+        <div className="animate-marquee items-center shrink-0 flex" aria-hidden="true">
           {products.map((item, idx) => {
             const isUp = item.change?.dir === 'up';
             const isDown = item.change?.dir === 'down';
             const pctVal = Math.abs(item.change?.pct || 0);
 
             return (
-              <div key={`dup-${idx}`} className="flex items-center gap-2 text-xs sm:text-sm shrink-0 px-4">
+              <div key={`dup-${idx}`} className="flex items-center gap-2 text-xs sm:text-sm shrink-0 px-6">
                 <span className="text-base">{item.image || item.categoryIcon || '🍚'}</span>
                 <span className="font-bold text-gray-900">{item.nameBn}</span>
                 <span className="text-gray-700 font-medium">
@@ -104,6 +107,7 @@ export default function PriceTicker() {
             );
           })}
         </div>
+
       </div>
     </div>
   );
